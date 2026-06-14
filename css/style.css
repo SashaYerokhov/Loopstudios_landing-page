@@ -9,19 +9,166 @@
   60% hsl(0, 0%, 0%)
    */
 }
-
 .alata-regular {
   font-family: "Alata", sans-serif;
   font-weight: 400;
   font-style: normal;
 }
-
-
 .josefin-sans-light {
   font-family: "Josefin Sans", sans-serif;
   font-optical-sizing: auto;
   font-weight: 300;
   font-style: normal;
+}
+*,
+::after,
+::before {
+  box-sizing: inherit;
+}
+html {
+  box-sizing: border-box;
+}
+body {
+  margin: 0;
+  padding: 0;
+  font-family: "Josefin Sans", sans-serif;
+  background: var(--white);
+  font-size: 0.9375rem;
+}
+img {
+  /* To keep the width of the image from going beyond the screen */
+  max-width: 100%;
+  display: block;
+}
+ul {
+  margin-block: 0;
+  padding-inline-start: 0;
+}
+a {
+  text-decoration: none;
+  color: var(--white);
+}
+body,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p {
+  margin: 0;
+}
+.container {
+  box-sizing: border-box;
+  max-width: 1130px;
+  margin-inline: auto;
+  padding-inline: 10px;
+}
+header {
+  background-image: url("../images/desktop/image-hero.jpg");
+
+  .header__menu {
+    display: flex;
+    align-items: center;
+    padding-block: 64px 127px;
+    img {
+      margin-inline-end: auto;
+    }
+    ul {
+      list-style-type: none;
+      display: flex;
+      align-items: center;
+      column-gap: 32px;
+      justify-content: space-evenly;
+      li {
+        position: relative;
+        padding-block-end: 8px;
+        transition: all 450ms ease-in-out;
+        &:hover::after {
+          position: absolute;
+          content: "";
+          left: 50%;
+          bottom: 0;
+          width: 24px;
+          height: 2px;
+          background: var(--white);
+          translate: -50% 0;
+        }
+        a {
+          line-height: 165%;
+        }
+      }
+    }
+  }
+
+  .open__button {
+    display: none;
+  }
+  .menu__button {
+    border: none;
+  }
+  .close__button {
+    display: none;
+  }
+  .header__content {
+    padding-block-end: 146px;
+    h1 {
+      max-width: 650px;
+      min-height: 278px;
+      font-weight: 300;
+      border: 2px solid var(--white);
+      padding: 42px 40px;
+      font-size: clamp(2.5rem, calc(0.073rem + 9.143vw), 4.5rem);
+      line-height: 100%;
+      text-transform: uppercase;
+      color: var(--white);
+    }
+  }
+}
+.main {
+  .description {
+    position: relative;
+    display: flex;
+    margin-block: 160px 184px;
+    /* align-items: center; */
+    picture {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 731px;
+      height: 500px;
+      z-index: 1;
+      overflow: hidden; /* Скрывает выступающие части */
+      img {
+        /* width: 100%;
+        height: 100%;
+        object-fit: cover; Обрезает картинку по размерам блока, сохраняя пропорции
+        object-position: center; Центрирует изображение внутри блока */
+      }
+    }
+    div {
+      position: absolute;
+      z-index: 2;
+      left: 520px;
+      top: 131px;
+      background-color: var(--white);
+      max-width: 541px;
+      min-height: 317px;
+      padding: 96px 0 0 97px;
+      h2 {
+        font-size: clamp(2rem, calc(0.8em + 4.571vw), 3rem);
+        line-height: 100%;
+        font-weight: 300;
+        text-transform: uppercase;
+        color: var(--black);
+        margin-block-end: 24px;
+      }
+      p {
+        line-height: 165%;
+        color: var(--black);
+      }
+    }
+  }
 }
 
 .attribution {
@@ -30,4 +177,91 @@
 }
 .attribution a {
   color: hsl(228, 45%, 44%);
+}
+
+/* 770px */
+@media (width <= 48.125rem) {
+  header {
+    position: sticky;
+    img {
+      position: relative;
+      z-index: 2;
+    }
+    nav {
+      padding-top: 127px;
+      visibility: hidden;
+      position: fixed;
+      top: 0;
+      left: -300px;
+      width: 100%;
+      min-height: 100%;
+      /* max-width: 100%; */
+      transform: translateX(0);
+      background: var(--black);
+      z-index: 1;
+      ul {
+        flex-direction: column;
+        gap: 24px 0;
+        li {
+          width: 100%;
+          text-align: left;
+          a {
+            font-family: "Josefin Sans", sans-serif;
+            font-weight: 300;
+            font-size: 24px;
+            line-height: 100%;
+            text-transform: uppercase;
+          }
+        }
+      }
+    }
+    .header__content {
+      h1 {
+        max-width: 608px;
+        min-height: 278px;
+        padding: 40px;
+      }
+    }
+    .menu__button {
+      position: relative;
+      background: inherit;
+      cursor: pointer;
+      z-index: 2;
+    }
+    .open__button {
+      display: block;
+    }
+    .close__button {
+      display: none;
+    }
+  }
+  .menu__active nav {
+    visibility: visible;
+    transform: translateX(300px);
+  }
+  .menu__active .open__button {
+    visibility: hidden;
+  }
+  .menu__active .open__button {
+    display: none;
+  }
+  .menu__active .close__button {
+    display: block;
+  }
+}
+
+/* 420px */
+@media (width <= 26.25rem) {
+  header {
+    nav {
+      display: none;
+    }
+    .header__content {
+      h1 {
+        max-width: 327px;
+        min-height: 196px;
+        padding: 18px 24px;
+      }
+    }
+  }
 }
