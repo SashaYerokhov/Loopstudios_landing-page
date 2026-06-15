@@ -4,10 +4,6 @@
   --grey-200: hsl(0, 0%, 85%);
   --blue-100: hsl(215, 30%, 92%);
   --blue-50: hsl(213, 100%, 98%);
-  /* gradient
-  10% hsl(0, 0%, 0%)
-  60% hsl(0, 0%, 0%)
-   */
 }
 .alata-regular {
   font-family: "Alata", sans-serif;
@@ -129,6 +125,8 @@ header {
   .description {
     position: relative;
     display: flex;
+    /* Если рисунок и текст внутри section имеют position: absolute, сам блок section «схлопывается» (его высота становится равной \(0\)), и следующий текст уходит под него.Решение: Задайте блоку section явную минимальную высоту. */
+    min-height: 500px;
     margin-block: 160px 184px;
     /* align-items: center; */
     picture {
@@ -140,17 +138,19 @@ header {
       z-index: 1;
       overflow: hidden; /* Скрывает выступающие части */
       img {
-        /* width: 100%;
+        width: 100%;
         height: 100%;
-        object-fit: cover; Обрезает картинку по размерам блока, сохраняя пропорции
-        object-position: center; Центрирует изображение внутри блока */
+        /* Обрезает картинку по размерам блока, сохраняя пропорции */
+        object-fit: cover;
+        /* Центрирует изображение внутри блока */
+        object-position: center;
       }
     }
     div {
       position: absolute;
       z-index: 2;
-      left: 520px;
-      top: 131px;
+      left: 570px;
+      top: 184px;
       background-color: var(--white);
       max-width: 541px;
       min-height: 317px;
@@ -169,6 +169,124 @@ header {
       }
     }
   }
+  .creations {
+    position: relative;
+    /* min-height: 1060px; */
+    h2 {
+      font-size: clamp(2rem, calc(0.8em + 4.571vw), 3rem);
+      line-height: 100%;
+      font-weight: 300;
+      text-transform: uppercase;
+      color: var(--black);
+      margin-block-end: 80px;
+    }
+    .creations__btn {
+      position: absolute;
+      top: 0;
+      right: 0;
+      width: 157px;
+      height: 40px;
+      display: flex;
+      flex-direction: row;
+      justify-content: center;
+      align-items: center;
+      padding: 0px;
+      border: 1px solid var(--black);
+      font-weight: 400;
+      font-size: 14px;
+      line-height: 100%;
+      letter-spacing: 5px;
+      color: var(--black);
+      background: inherit;
+      cursor: pointer;
+      transition:
+        background 350ms ease-in-out,
+        color 450ms ease-in;
+      z-index: 2;
+      &:hover {
+        background: var(--black);
+        color: var(--white);
+      }
+    }
+    .creations__images {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      grid-template-rows: 450px;
+      gap: 32px;
+      .creations__img {
+        display: grid;
+        position: relative;
+        border: none;
+        background: none;
+        padding: 0;
+        cursor: pointer;
+        overflow: hidden;
+        &::after {
+          content: "";
+          position: absolute;
+          top: 0;
+          left: 0;
+          width: 100%;
+          height: 100%;
+          /* Белый цвет с прозрачностью 75% */
+          background-color: rgba(255, 255, 255, 0.7);
+          opacity: 0; /* Изначально скрыт */
+          transition: opacity 0.3s ease;
+        }
+        /* Для лучшей читаемости белого текста на светлых участках изображений */
+        &::before {
+          content: "";
+          position: absolute;
+          inset: 0;
+          background: linear-gradient(
+            to top,
+            rgba(0, 0, 0, 0.6) 0%,
+            rgba(0, 0, 0, 0) 50%
+          );
+          z-index: 0;
+        }
+        &:hover::after {
+          opacity: 1;
+        }
+        &:hover p {
+          color: #000000;
+        }
+        picture {
+          /* Занимают одну и ту же колонку */
+          grid-column: 1 / -1;
+          /* Занимают одну и ту же строку */
+          grid-row: 1 / -1;
+
+          img {
+            display: block;
+            width: 256px;
+            height: 450px;
+            object-fit: cover;
+            transition: opacity 0.3s ease;
+          }
+        }
+        p {
+          position: absolute;
+          /* Текст должен быть выше белой заливки */
+          z-index: 2;
+          grid-column: 1 / -1; /* Занимают одну и ту же колонку */
+          grid-row: 1 / -1; /* Занимают одну и ту же строку */
+          z-index: 1;
+          align-self: end; /* Текст внизу */
+          /* Текст слева */
+          /* justify-self: self-start;  */
+          text-align: left;
+          margin: 32px 40px;
+          font-weight: 300;
+          font-size: 32px;
+          line-height: 100%;
+          text-transform: uppercase;
+          color: var(--white);
+          transition: color 0.3s ease;
+        }
+      }
+    }
+  }
 }
 
 .attribution {
@@ -181,6 +299,9 @@ header {
 
 /* 770px */
 @media (width <= 48.125rem) {
+  .container {
+    max-width: 628px;
+  }
   header {
     position: sticky;
     img {
@@ -197,7 +318,12 @@ header {
       min-height: 100%;
       /* max-width: 100%; */
       transform: translateX(0);
-      background: var(--black);
+      /* background: var(--black); */
+      background-image: linear-gradient(
+        10deg,
+        hsl(0, 0%, 0%) 10%,
+        hsl(0, 0%, 0%) 60%
+      );
       z-index: 1;
       ul {
         flex-direction: column;
@@ -247,6 +373,49 @@ header {
   }
   .menu__active .close__button {
     display: block;
+  }
+  .main {
+    .description {
+      position: sticky;
+      flex-direction: column;
+      row-gap: 48px;
+      margin-block: 96px;
+      picture {
+        position: sticky;
+        width: 608px;
+        height: 284px;
+        /* overflow: visible; */
+      }
+      div {
+        position: sticky;
+        left: 0;
+        top: 0;
+        padding: 0;
+        width: 608px;
+        height: 195px;
+        background: inherit;
+        text-align: center;
+      }
+    }
+    .creations {
+      .creations__btn {
+        bottom: -70px;
+        right: 50%;
+        top: auto;
+      }
+      .creations__images {
+        grid-template-columns: 1fr;
+        grid-template-rows: none;
+        .creations__img {
+          picture {
+            img {
+              width: 608px;
+              height: 120px;
+            }
+          }
+        }
+      }
+    }
   }
 }
 
